@@ -1,0 +1,8 @@
+export default {
+  singleQuote: true,
+  jsxSingleQuote: false,
+  trailingComma: 'es5',
+  semi: true,
+  tabWidth: 2,
+  printWidth: 80,
+};

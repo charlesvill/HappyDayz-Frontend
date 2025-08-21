@@ -1,34 +1,56 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { IndexLayout } from './components/indexLayout/indexLayout';
+import { NotFound } from './components/notFound/notFound';
+import { ErrorBoundary } from './components/errorBoundary/errorBoundary';
+import { Dashboard } from './pages/dashboard/dashboard';
+import { HomePage } from './pages/home/homePage';
+import { EventLayout } from './components/eventLayout/eventLayout';
+import { Event } from './pages/event/event';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <IndexLayout />,
+      children: [
+        {
+          index: true,
+          element: <Dashboard />,
+        },
+        {
+          path: 'dashboard',
+          element: <Dashboard />,
+        },
+        {
+          path: 'home',
+          element: <HomePage />,
+        },
+      ],
+      errorElement: <ErrorBoundary />,
+    },
+    {
+      path: '/event',
+      element: <EventLayout />,
+      children: [
+        {
+          path: ':eventid',
+          element: <Event />,
+        },
+      ],
+      errorElement: <ErrorBoundary />,
+    },
+    {
+      path: '*',
+      element: <NotFound />,
+    },
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div id="app">
+      here is the main app here the authprovider will go inside of that will be
+      the router provider
+      <RouterProvider router={router} />
+    </div>
   );
 }
 
