@@ -7,7 +7,8 @@ export function IndexLayout() {
     <>
       <FooterIndex />
       <main>
-        this is where the outlet container goes
+        this is where the outlet container goes dont forget the outlet needs the
+        context such as user
         <Outlet />
       </main>
       <HeaderIndex />

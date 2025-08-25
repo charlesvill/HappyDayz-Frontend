@@ -6,6 +6,8 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { HomePage } from './pages/home/homePage';
 import { EventLayout } from './components/eventLayout/eventLayout';
 import { Event } from './pages/event/event';
+import { AuthProvider } from './utils/auth/authProvider';
+import { AuthGate } from './utils/auth/authPath';
 
 function App() {
   const router = createBrowserRouter([
@@ -14,23 +16,34 @@ function App() {
       element: <IndexLayout />,
       children: [
         {
+          // check user and url if / redirect to dash
+          // if home && user -> home
           index: true,
-          element: <Dashboard />,
-        },
-        {
-          path: 'dashboard',
-          element: <Dashboard />,
+          element: <HomePage />,
         },
         {
           path: 'home',
           element: <HomePage />,
+        },
+        {
+          path: 'dashboard/:userid',
+          element: (
+            <AuthGate>
+              <Dashboard />
+            </AuthGate>
+          ),
         },
       ],
       errorElement: <ErrorBoundary />,
     },
     {
       path: '/event',
-      element: <EventLayout />,
+      element: (
+        // authgate needs to be updated for event pages, prompt for guest credentials
+        <AuthGate>
+          <EventLayout />
+        </AuthGate>
+      ),
       children: [
         {
           path: ':eventid',
@@ -47,9 +60,9 @@ function App() {
 
   return (
     <div id="app">
-      here is the main app here the authprovider will go inside of that will be
-      the router provider
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </div>
   );
 }
