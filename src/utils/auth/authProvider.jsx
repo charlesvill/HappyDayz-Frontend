@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const [initializing, setInitializing] = useState(true);
   const [error, setError] = useState(null);
 
-  const getUserUrl = serverHostName() + '/users';
+  const getUserUrl = serverHostName() + '/user';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +33,6 @@ export function AuthProvider({ children }) {
         localStorage.setItem('token', token);
       } catch (err) {
         console.log(err.message);
-        console.log(user.message);
         let errMsg;
         if (user instanceof Error) {
           errMsg =
@@ -68,6 +67,7 @@ export function AuthProvider({ children }) {
           ? 'Username or password incorrect'
           : 'Other Error Occurred';
       logOut();
+      console.error(errMsg);
       setError(errMsg);
       setLoading(false);
       return;

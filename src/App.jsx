@@ -4,6 +4,8 @@ import { NotFound } from './components/notFound/notFound';
 import { ErrorBoundary } from './components/errorBoundary/errorBoundary';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { HomePage } from './pages/home/homePage';
+import { LogIn } from './pages/log-in/logIn';
+import { SignUp } from './pages/sign-up/signUp';
 import { EventLayout } from './components/eventLayout/eventLayout';
 import { Event } from './pages/event/event';
 import { AuthProvider } from './utils/auth/authProvider';
@@ -24,6 +26,14 @@ function App() {
         {
           path: 'home',
           element: <HomePage />,
+        },
+        {
+          path: 'log-in',
+          element: <LogIn />,
+        },
+        {
+          path: 'sign-up',
+          element: <SignUp />,
         },
         {
           path: 'dashboard/:userid',

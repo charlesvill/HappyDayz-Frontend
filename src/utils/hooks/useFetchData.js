@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { apiFetch } from '../apiUtils';
+import { Authorization } from '../auth/authProvider';
 
 export function useFetchData(url, dependentVar) {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { loading, setLoading, error, setError } = useContext(Authorization);
 
   useEffect(() => {
     const fetchData = async () => {

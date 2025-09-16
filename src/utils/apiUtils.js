@@ -9,7 +9,7 @@ export async function apiFetch(
     method,
     headers: {
       ...headers,
-      ...(token ? { Authorization: token && `Bearer ${token}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     mode: 'cors',
   };
@@ -17,17 +17,22 @@ export async function apiFetch(
   if (body && method.toUpperCase() !== 'GET') {
     options.body = JSON.stringify(body);
   }
+
   const response = await fetch(url, options);
 
+  // Handle errors
   if (!response.ok) {
+    const text = await response.text();
     let message;
+
     try {
-      const json = await response.json();
-      message = json.message || json.stringify(json);
+      const json = JSON.parse(text);
+      message = json.message || JSON.stringify(json);
     } catch {
-      message = await response.text();
+      message = text;
     }
-    throw new Error(`${response.status}: ${response.statusText}: ${message}`);
+
+    return new Error(`${response.status}: ${response.statusText}: ${message}`);
   }
 
   return await response.json();
