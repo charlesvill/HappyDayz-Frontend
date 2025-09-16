@@ -29,8 +29,6 @@ export function LogIn() {
   }
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log('field data: ');
-    console.dir(fieldData);
     const url = serverHostName() + '/auth';
     await login(url, fieldData);
   }

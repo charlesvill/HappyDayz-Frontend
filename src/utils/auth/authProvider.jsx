@@ -28,7 +28,7 @@ export function AuthProvider({ children }) {
         //
         // too much logging. need a logging utility hook or function that checks env for level of logging.
         //
-        setUser(user);
+        setUser(user.user);
         setError(null);
         localStorage.setItem('token', token);
       } catch (err) {
