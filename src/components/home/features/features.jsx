@@ -30,6 +30,20 @@ export function Features() {
           <FeatureBadge data={featDataSet} key={data.tagline} />
         ))}
       </div>
+      <div>
+        <h3>You Were the Life of the Party, Relive the Best Moments</h3>
+        <div>
+          <article>
+            <img src="" alt="" />
+            <h4>Chat with your guests</h4>
+          </article>
+
+          <article>
+            <img src="" alt="" />
+            <h4>Upload pictures</h4>
+          </article>
+        </div>
+      </div>
     </section>
   );
 }
