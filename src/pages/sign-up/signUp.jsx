@@ -20,7 +20,9 @@ export function SignUp() {
     e.preventDefault();
     const response = await apiFetch(url, null, fieldData, 'POST');
     if (response instanceof Error) {
-      setError(response);
+      console.log('error object: ');
+      console.log(response);
+      setError(response.message);
     }
     console.log(response);
     navigate('/log-in', { replace: true });
@@ -65,7 +67,7 @@ export function SignUp() {
         <label htmlFor="confirm_pass">Confirm Password</label>
         <input
           type="password"
-          id="password"
+          id="confirm_pass"
           value={fieldData.confirm_pass || ''}
           onChange={handleInput}
         />
