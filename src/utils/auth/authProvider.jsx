@@ -108,7 +108,7 @@ export function AuthProvider({ children }) {
   return (
     <>
       <Authorization.Provider value={authContextValue}>
-        {!loading && children}
+        {!loading && !error && children}
       </Authorization.Provider>
     </>
   );
