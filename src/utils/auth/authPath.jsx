@@ -18,7 +18,7 @@ export function AuthGate({ children }) {
   }
 
   if (!user) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/log-in" replace />;
   }
 
   return children;

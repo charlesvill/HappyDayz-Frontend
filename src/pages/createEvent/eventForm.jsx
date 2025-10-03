@@ -1,19 +1,10 @@
-import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useContext } from 'react';
 import { apiFetch, serverHostName } from '../../utils/apiUtils';
 import { Authorization } from '../../utils/auth/authProvider';
 
 export function EventForm() {
   const [formFields, setFormFields] = useState({});
   const { user, setError } = useContext(Authorization);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    navigate('/log-in', { replace: true });
-  }, [user]);
 
   const url = serverHostName() + 'event' + user.id;
   function handleInput(e) {
@@ -37,6 +28,7 @@ export function EventForm() {
     <section>
       <heading>
         <h2>New Event</h2>
+        {user.first_name}
       </heading>
       <article>
         <form>

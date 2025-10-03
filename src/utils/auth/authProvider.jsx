@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [path, setPath] = useState(null);
   const [mode, setMode] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,32 +16,23 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      let user;
+      let response;
       try {
-        user = await apiFetch(getUserUrl, token, 'GET');
-        //jweb token expires need to reauthenticate
-
-        // console.log('response status: ', response.status);
-        // // const json = await response.json();
-        // console.dir('user fetch from token: ');
-        // console.log(json);
-        //
-        // too much logging. need a logging utility hook or function that checks env for level of logging.
-        //
-        setUser(user.user);
+        response = await apiFetch(getUserUrl, token, 'GET');
+        setUser(response.user);
         setError(null);
         localStorage.setItem('token', token);
       } catch (err) {
         console.log(err.message);
         let errMsg;
-        if (user instanceof Error) {
+        if (response instanceof Error) {
           errMsg =
-            user.message.slice(0, 3) === '401'
+            response.message.slice(0, 3) === '401'
               ? 'Not authorized please sign in'
               : err.message;
         }
         setError(errMsg);
-        return logOut();
+        logOut();
       } finally {
         setLoading(false);
         setInitializing(false);
@@ -49,6 +40,8 @@ export function AuthProvider({ children }) {
     };
 
     if (!token) {
+      setInitializing(false);
+      setLoading(false);
       return;
     }
 
@@ -108,7 +101,7 @@ export function AuthProvider({ children }) {
   return (
     <>
       <Authorization.Provider value={authContextValue}>
-        {!loading && !error && children}
+        {!loading && children}
       </Authorization.Provider>
     </>
   );

@@ -22,6 +22,7 @@ export async function apiFetch(
 
   // Handle errors
   if (!response.ok) {
+    console.log(response);
     const text = await response.text();
     let message;
 

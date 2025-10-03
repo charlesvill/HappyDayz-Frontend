@@ -4,9 +4,7 @@ export function Landing() {
       <header>
         <h1>The Online Space Where your Event Lives</h1>
       </header>
-      <div>
-        <img src="" alt="Picture of stylized website with people having fun" />
-      </div>
+      <div>Picture of stylized website with people having fun</div>
       <article>
         <p>
           Hosting for us is an expression of both our creativity and what is

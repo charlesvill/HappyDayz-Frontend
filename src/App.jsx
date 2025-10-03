@@ -6,6 +6,7 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { HomePage } from './pages/home/homePage';
 import { LogIn } from './pages/log-in/logIn';
 import { SignUp } from './pages/sign-up/signUp';
+import { EventForm } from './pages/createEvent/eventForm';
 import { EventLayout } from './components/eventLayout/eventLayout';
 import { Event } from './pages/event/event';
 import { AuthProvider } from './utils/auth/authProvider';
@@ -34,6 +35,14 @@ function App() {
         {
           path: 'sign-up',
           element: <SignUp />,
+        },
+        {
+          path: 'create',
+          element: (
+            <AuthGate>
+              <EventForm />
+            </AuthGate>
+          ),
         },
         {
           path: 'dashboard/:userid',
