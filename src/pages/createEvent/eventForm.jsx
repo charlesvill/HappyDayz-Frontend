@@ -26,10 +26,10 @@ export function EventForm() {
 
   return (
     <section>
-      <heading>
+      <header>
         <h2>New Event</h2>
         {user.first_name}
-      </heading>
+      </header>
       <article>
         <form>
           <label htmlFor="name">Your Event Name</label>
