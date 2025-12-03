@@ -6,7 +6,6 @@ export function Event() {
   );
 }
 
-
 // takes event object that carries the fields from db
-// populates templated pages 
-// gives liberty to change 
+// populates templated pages
+// gives liberty to change
