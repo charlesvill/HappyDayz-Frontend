@@ -19,27 +19,34 @@ const featDataSet = [
       'Add and edit layout to curate exactly the experience you want guests to have navigating your site',
   },
 ];
+
 export function Features() {
   return (
-    <section>
-      <header>
+    <section className="features">
+      <header className="features__header">
         <h2>Focus on the Creativity</h2>
       </header>
-      <div>
-        {featDataSet.map((data) => (
-          <FeatureBadge data={featDataSet} key={data.tagline} />
+
+      <div className="features__list">
+        {featDataSet.map((item) => (
+          <FeatureBadge
+            key={item.tagline}
+            data={item}
+          />
         ))}
       </div>
-      <div>
+
+      <div className="features__extras">
         <h3>You Were the Life of the Party, Relive the Best Moments</h3>
-        <div>
-          <article>
-            <img src="" alt="" />
+
+        <div className="features__extras-grid">
+          <article className="feature-extra">
+            <img src="" alt="Chat with your guests" />
             <h4>Chat with your guests</h4>
           </article>
 
-          <article>
-            <img src="" alt="" />
+          <article className="feature-extra">
+            <img src="" alt="Upload pictures" />
             <h4>Upload pictures</h4>
           </article>
         </div>
