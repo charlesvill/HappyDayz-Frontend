@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { eventInitialize } from '../utils/helpers/eventInitializer';
+import { eventInitialize } from '../utils/helpers/eventDataInit';
 
 describe('eventBuilder works', () => {
   it('packages data correctly', () => {

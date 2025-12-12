@@ -1,6 +1,6 @@
-import { page } from '../templates/pageBuilder';
-import { module } from '../templates/moduleBuilder';
-import { eventBuilder } from '../templates/eventBuilder';
+import { page } from '../templates/page';
+import { module } from '../templates/module';
+import { eventBuilder } from '../templates/event';
 
 // new home of helper to initialize any event
 
