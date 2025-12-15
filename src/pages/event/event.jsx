@@ -1,3 +1,11 @@
+// page component builder
+//
+//
+// module component builder
+//
+//
+//
+
 export function Event() {
   return (
     <section>
@@ -6,6 +14,5 @@ export function Event() {
   );
 }
 
-// takes event object that carries the fields from db
-// populates templated pages
-// gives liberty to change
+// work on rendering pipeline for the data made in event initializer
+// create dictionary with keys to components

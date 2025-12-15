@@ -4,9 +4,9 @@ import { HeaderEvent } from './header_event/headerEvent';
 export function EventLayout() {
   return (
     <>
-      <FooterEvent />
-      <main>Outlet goes here</main>
       <HeaderEvent />
+      <main>Outlet goes here</main>
+      <FooterEvent />
     </>
   );
 }

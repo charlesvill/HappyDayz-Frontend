@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { IndexLayout } from './components/indexLayout/indexLayout';
+import { IndexLayout } from './components/home/indexLayout/indexLayout';
 import { NotFound } from './components/notFound/notFound';
 import { ErrorBoundary } from './components/errorBoundary/errorBoundary';
 import { Dashboard } from './pages/dashboard/dashboard';
@@ -7,7 +7,7 @@ import { HomePage } from './pages/home/homePage';
 import { LogIn } from './pages/log-in/logIn';
 import { SignUp } from './pages/sign-up/signUp';
 import { EventForm } from './pages/createEvent/eventForm';
-import { EventLayout } from './components/eventLayout/eventLayout';
+import { EventLayout } from './components/event/eventLayout/eventLayout';
 import { Event } from './pages/event/event';
 import { AuthProvider } from './utils/auth/authProvider';
 import { AuthGate } from './utils/auth/authPath';
