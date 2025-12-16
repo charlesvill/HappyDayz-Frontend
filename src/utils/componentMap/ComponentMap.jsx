@@ -13,7 +13,8 @@ export const componentMap = {
   },
   module: {
     builder: ModuleBuilder,
-    title: ModCollection.Title,
     img: ModCollection.Img,
+    paragraph: ModCollection.Paragraph,
+    heading: ModCollection.Heading,
   },
 };

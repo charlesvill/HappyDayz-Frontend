@@ -10,6 +10,8 @@ describe('eventBuilder works', () => {
         startDate: '11-01-25',
         endDate: '11-01-25',
         location: '321 N Maynor Pl',
+        image:
+          'https://images.squarespace-cdn.com/content/v1/63ec08a7fa1d1a1947280fc6/1708129271588-2BI07Q8O57NQR04KM6OV/more-killer-halloween-party-ideas-featured.png?format=2500w',
       },
       'FooBar'
     );

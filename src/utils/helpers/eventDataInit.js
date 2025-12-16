@@ -4,16 +4,16 @@ import { eventBuilder } from '../templates/event';
 
 // new home of helper to initialize any event
 
-export function eventInitialize(fields, hostName) {
+export function eventInitialize(fields = {}, hostName) {
   const homePage = page('Home', 'home', 'home', 0, [
-    module('h1', 0, `<h1>${fields.name}<h1>`),
-    module('img', 1, '<img>'),
-    module('p', 2, `<p>Hosted by: ${hostName}</p>`),
-    module('p', 3, `<p>${fields.description}</p>`),
+    module('heading', 0, `<h1>${fields.name}<h1>`),
+    module('img', 1, `${fields.image}`),
+    module('heading', 2, `<h5>Hosted by: ${hostName}</h5>`),
+    module('paragraph', 3, `<p>${fields.description}</p>`),
   ]);
   const locationPage = page('Location', 'location', 'location', 1, [
     module('img', 0, '<img>Map picture</img>'),
-    module('p', 1, `<p>${fields.loation}</p>`),
+    module('paragraph', 1, `<p>${fields.loation}</p>`),
   ]);
   const newEvent = eventBuilder(fields, hostName)
     .addPage(homePage)
