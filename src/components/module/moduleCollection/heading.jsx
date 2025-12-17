@@ -1,4 +1,4 @@
-export default function Heading(data, size) {
-  const tag = `h${size}`;
-  return <tag>{data}</tag>;
+export default function Heading({size, text}) {
+  const Tag = `h${size}`;
+  return <Tag>{text}</Tag>;
 }
