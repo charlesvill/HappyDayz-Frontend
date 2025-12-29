@@ -11,7 +11,7 @@ export function eventBuilder(fields, hostName) {
   };
 
   const builder = {
-    fields,
+    ...fields,
     hostName,
     addPage,
     pages,

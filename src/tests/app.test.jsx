@@ -17,6 +17,6 @@ describe('eventBuilder works', () => {
     );
 
     console.log(exEvent);
-    expect(exEvent.fields.name).toBe('Hallo Party');
+    expect(exEvent.name).toBe('Hallo Party');
   });
 });

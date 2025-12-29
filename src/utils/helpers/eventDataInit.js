@@ -18,6 +18,7 @@ export function eventInitialize(fields = {}, hostName) {
   const newEvent = eventBuilder(fields, hostName)
     .addPage(homePage)
     .addPage(locationPage);
+  const { addPage, build, ...eventBody } = newEvent;
 
-  return newEvent;
+  return eventBody;
 }
