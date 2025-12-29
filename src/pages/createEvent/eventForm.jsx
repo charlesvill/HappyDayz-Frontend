@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { apiFetch, serverHostName } from '../../utils/apiUtils';
 import { Authorization } from '../../utils/auth/authProvider';
+import { eventInitialize } from '../../utils/helpers/eventDataInit';
 
 export function EventForm() {
   const [formFields, setFormFields] = useState({});
@@ -17,9 +18,11 @@ export function EventForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    // to refactor: formFields need to go through eventBuilder fn to build json data that will be sent to db.
 
     try {
-      const response = await apiFetch(url, user.token, formFields, 'POST');
+      const eventData = eventInitialize(formFields);
+      await apiFetch(url, user.token, eventData, 'POST');
     } catch (err) {
       setError(err);
     }
@@ -32,7 +35,7 @@ export function EventForm() {
         {user.first_name}
       </header>
       <article>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="name">Your Event Name</label>
           <input
             type="text"
@@ -68,7 +71,7 @@ export function EventForm() {
             value={formFields.location}
             onChange={handleInput}
           />
-          <button onSubmit={handleSubmit}>Create Event</button>
+          <button type="submit">Create Event</button>
         </form>
       </article>
     </section>
