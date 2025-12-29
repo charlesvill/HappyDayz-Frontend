@@ -1,3 +1,3 @@
-export default function Paragraph(data) {
-  return <p>{data}</p>;
+export default function Paragraph(text) {
+  return <p>{text}</p>;
 }

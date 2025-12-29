@@ -1,5 +1,5 @@
-export const module = (type, order, html) => ({
+export const module = (type, order, data) => ({
   type,
   order,
-  html,
+  data,
 });
