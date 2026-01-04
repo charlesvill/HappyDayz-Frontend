@@ -1,3 +1,3 @@
-export default function Img(data) {
-  return <img src={`${data}`} alt="" />;
+export default function Img({src, alt}) {
+  return <img src={src} alt={alt} />;
 }
