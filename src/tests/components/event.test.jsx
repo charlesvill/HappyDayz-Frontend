@@ -4,15 +4,12 @@ import { dummyData } from '../dummyResponse';
 import { Event } from '../../pages/event/event';
 
 describe('Event renderer works', () => {
-  render(<Event data={dummyData} />);
+  screen.debug();
 
-  it('contains tab for home page', () => {
-    expect(screen.getByRole('button', { name: 'Home' })).toBeInTheDocument();
-  });
-
-  it('contains tab for location page', () => {
-    expect(
-      screen.getByRole('button', { name: 'Location' })
-    ).toBeInTheDocument();
+  it('renders page nav buttons', () => {
+    render(<Event data={dummyData} />);
+    ['Home', 'Location'].forEach((title) => {
+      expect(screen.getByRole('button', { name: title })).toBeInTheDocument();
+    });
   });
 });
