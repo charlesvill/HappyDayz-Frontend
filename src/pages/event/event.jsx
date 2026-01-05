@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ModuleRenderer } from '../../components/module/moduleBuilder/moduleBuilder';
+import { ModuleRenderer } from '../../components/module/moduleRenderer/moduleRenderer';
 
 export function Event({ data }) {
   const [active, setActive] = useState(data.pages[0]);
