@@ -6,10 +6,13 @@ import { Event } from '../../pages/event/event';
 describe('Event renderer works', () => {
   render(<Event data={dummyData} />);
 
-  it('contains page tab', () => {
-    expect(screen.getByRole())
+  it('contains tab for home page', () => {
+    expect(screen.getByRole('button', { name: 'Home' })).toBeInTheDocument();
+  });
+
+  it('contains tab for location page', () => {
+    expect(
+      screen.getByRole('button', { name: 'Location' })
+    ).toBeInTheDocument();
   });
 });
-
-
-// left off on listing out the expect and accessing page tabs

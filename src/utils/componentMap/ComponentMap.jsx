@@ -1,18 +1,19 @@
-import { EventBuilder } from '../../components/event/eventBuilder/eventBuilder';
-import { PageBuilder } from '../../components/page/pageBuilder/pageBuilder';
-import { ModuleBuilder } from '../../components/module/moduleBuilder/moduleBuilder';
+import { ModuleRenderer } from '../../components/module/moduleRenderer/moduleRenderer';
 
 import * as ModCollection from '../../components/module/';
 
+// I may not need neither of the renderer components included
+// extraneous to the purpose of this component map
+
 export const componentMap = {
   event: {
-    builder: EventBuilder,
+    renderer: null,
   },
   page: {
-    builder: PageBuilder,
+    renderer: null,
   },
   module: {
-    builder: ModuleBuilder,
+    renderer: ModuleRenderer,
     img: ModCollection.Img,
     paragraph: ModCollection.Paragraph,
     heading: ModCollection.Heading,

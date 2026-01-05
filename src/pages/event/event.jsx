@@ -3,10 +3,13 @@ import { ModuleRenderer } from '../../components/module/moduleRenderer/moduleRen
 
 export function Event({ data }) {
   const [active, setActive] = useState(data.pages[0]);
+  console.log(data.pages);
   const pageTabs = data.pages.map((page) => page.title).filter(Boolean);
+  console.log("page tabs: ", pageTabs);
+  console.log(active);
   const renderedPage = active.modules.map((module) => (
     <section key={module.id}>
-      <ModuleRenderer data={module.data} />
+      <ModuleRenderer data={module} />
     </section>
   ));
 
