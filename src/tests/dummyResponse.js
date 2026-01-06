@@ -53,9 +53,19 @@ export const dummyData = {
       event_id: 1,
       modules: [
         {
+          id: 7,
+          type: 'heading',
+          order: 0,
+          data: {
+            size: 2,
+            text: 'Address',
+          },
+          page_id: 1,
+        },
+        {
           id: 3,
           type: 'img',
-          order: 0,
+          order: 1,
           data: {
             src: 'fake.source',
             alt: 'fake alt',
@@ -65,7 +75,7 @@ export const dummyData = {
         {
           id: 4,
           type: 'paragraph',
-          order: 1,
+          order: 2,
           data: {
             text: '127 Washington Blvd',
           },

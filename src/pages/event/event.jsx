@@ -22,7 +22,7 @@ export function Event({ data }) {
       console.error('next page not found!');
       return;
     }
-    setActive();
+    setActive(nextPage);
   }
 
   return (
