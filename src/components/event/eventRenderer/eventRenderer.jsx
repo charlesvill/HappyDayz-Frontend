@@ -11,13 +11,13 @@ export function EventRenderer() {
   // event/userid/eventid
 
   const { user } = useContext(Authorization);
-  const [stageData, setStageData] = useState({});
-  const [localData, setLocalData] = useState({});
+  const [stageData, setStageData] = useState(null);
+  const [localData, setLocalData] = useState(null);
+  const [unSavedChanges, setUnSavedChanges] = useState(false);
   const { eventid } = useParams();
   // url query param of /?edit => truthy
   const edit = useSearchParams.has('edit');
 
-  // pass the fn and mode in the context
   // individual modules will pull the mode and data setter fn from context
   // each module
   const url = serverHostName() + `/event/${user.id}/${eventid}`;
@@ -25,14 +25,35 @@ export function EventRenderer() {
   const { loading, data } = useFetchData(url, eventid);
 
   useEffect(() => {
-    const local = localData.getItem('localEvent');
-    if (local) {
+    // init effect
+    // come back here to see if I need check for unsaved progress from ls
+    if (data) {
+      data.localTimeStamp = new Date().toISOString();
+      localStorage.setItem(`localEvent:${eventid}`, JSON.stringify(data));
+      setLocalData(data);
+    } else if (localStorage.getItem(`localEvent:${eventid}`)) {
+      setUnSavedChanges(false);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    // mutation effect
+    if (stageData) {
       // check timestamp localStorage and stageData
       // if stage data has newer time, update
       // the local data
-    } else {
-      localStorage.setItem('localEvent', data);
-      setLocalData(data);
+
+      const local = localStorage.getItem(`localEvent:${eventid}`);
+      if (local) {
+        const lsData = JSON.parse(local);
+        if (stageData.localTimeStamp > lsData.localTimeStamp) {
+          setLocalData(stageData);
+          localStorage.setItem(
+            `localEvent:${eventid}`,
+            JSON.stringify(stageData)
+          );
+        }
+      }
     }
   }, [stageData]);
 
