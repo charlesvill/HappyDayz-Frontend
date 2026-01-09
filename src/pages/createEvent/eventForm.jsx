@@ -7,7 +7,7 @@ export function EventForm() {
   const [formFields, setFormFields] = useState({});
   const { user, setError } = useContext(Authorization);
 
-  const url = serverHostName() + 'event' + user.id;
+  const url = serverHostName() + '/event/' + user.id;
 
   function handleInput(e) {
     const fieldname = e.target.id;

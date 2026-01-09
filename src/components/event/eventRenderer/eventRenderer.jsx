@@ -32,7 +32,7 @@ export function EventRenderer() {
       localStorage.setItem(`localEvent:${eventid}`, JSON.stringify(data));
       setLocalData(data);
     } else if (localStorage.getItem(`localEvent:${eventid}`)) {
-      setUnSavedChanges(false);
+      setUnSavedChanges(true);
     }
   }, [data]);
 

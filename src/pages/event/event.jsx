@@ -6,7 +6,7 @@ export function Event({ data }) {
   const pageTabs = data.pages.map((page) => page.title).filter(Boolean);
   const renderedPage = active.modules.map((module) => (
     <section key={module.id}>
-      <ModuleRenderer data={module} />
+      <ModuleRenderer type={module.type} props={module.data} />
     </section>
   ));
 
