@@ -58,6 +58,7 @@ export function EventRenderer() {
   }, [stageData]);
 
   const eventContextValue = {
+    localData,
     setStageData,
     edit,
   };

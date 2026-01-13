@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { ModuleRenderer } from '../../components/module/moduleRenderer/moduleRenderer';
+import { ModuleContext } from '../../utils/hooks/useModuleContext';
 
 export function Event({ data }) {
   const [active, setActive] = useState(data.pages[0]);
   const pageTabs = data.pages.map((page) => page.title).filter(Boolean);
   const renderedPage = active.modules.map((module) => (
     <section key={module.id}>
-      <ModuleRenderer type={module.type} props={module.data} />
+      <ModuleContext.Provider
+        value={{ pageId: active.id, moduleId: module.id }}
+      >
+        <ModuleRenderer type={module.type} data={module.data} />
+      </ModuleContext.Provider>
     </section>
   ));
 
