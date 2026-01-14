@@ -13,6 +13,8 @@ export default function Heading({ size, text }) {
   function Form() {
     const [fields, setFields] = useState({ size: size, text: text });
 
+    // how is this triggered
+    //
     function updateObj() {
       const newData = {
         ...localData,
@@ -41,15 +43,27 @@ export default function Heading({ size, text }) {
       const fieldName = e.target.id;
       const value = e.target.value;
 
-      setFields({ ...fields, [fieldName]: value });
+      setFields((prev) => ({ ...prev, [fieldName]: value }));
     }
 
     // need to write how often data gets updated to the parent
 
     return (
       <>
-        <input type="text" id={`h${size}`} value={fields.test} />
-        <input type="number" id={'size'} value={fields.size} />
+        <input
+          type="text"
+          id={`h${size}`}
+          value={fields.test}
+          onChange={handleInput}
+          onBlur={updateObj}
+        />
+        <input
+          type="number"
+          id={'size'}
+          value={fields.size}
+          onChange={handleInput}
+          onBlur={updateObj}
+        />
       </>
     );
     // clicking on the field triggers the slider button
