@@ -4,69 +4,40 @@ import { useState } from 'react';
 
 export default function Heading({ size, text }) {
   const { pageId, moduleId } = useModuleContext();
-  const { localData, setStageData, edit } = useModuleFns();
-  function View() {
+  const { localData, setStageData, editMode, updateObj } = useModuleFns();
+
+  const [fields, setFields] = useState({ size, text });
+
+  function handleInput(e) {
+    const { name, value } = e.target;
+    setFields((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function commit() {
+    updateObj(localData, pageId, moduleId, fields, setStageData);
+  }
+
+  if (!editMode) {
     const Tag = `h${size}`;
     return <Tag>{text}</Tag>;
   }
 
-  function Form() {
-    const [fields, setFields] = useState({ size: size, text: text });
-
-    // how is this triggered
-    //
-    function updateObj() {
-      const newData = {
-        ...localData,
-        pages: localData.pages.map((page) =>
-          page.id !== pageId
-            ? page
-            : {
-                ...page,
-                modules: page.modules.map((module) =>
-                  module.id !== moduleId
-                    ? module
-                    : {
-                        ...module,
-                        data: {
-                          ...fields,
-                        },
-                      }
-                ),
-              }
-        ),
-      };
-      setStageData(newData);
-    }
-
-    function handleInput(e) {
-      const fieldName = e.target.id;
-      const value = e.target.value;
-
-      setFields((prev) => ({ ...prev, [fieldName]: value }));
-    }
-
-    // need to write how often data gets updated to the parent
-
-    return (
-      <>
-        <input
-          type="text"
-          id={`h${size}`}
-          value={fields.test}
-          onChange={handleInput}
-          onBlur={updateObj}
-        />
-        <input
-          type="number"
-          id={'size'}
-          value={fields.size}
-          onChange={handleInput}
-          onBlur={updateObj}
-        />
-      </>
-    );
-    // clicking on the field triggers the slider button
-  }
-  return edit ? <Form /> : <View />;
+  return (
+    <>
+      <input
+        type="text"
+        name="text"
+        value={fields.text}
+        onChange={handleInput}
+        onBlur={commit}
+      />
+      <input
+        type="number"
+        name="size"
+        value={fields.size}
+        onChange={handleInput}
+        onBlur={commit}
+      />
+    </>
+  );
 }

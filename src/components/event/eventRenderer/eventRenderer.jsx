@@ -16,7 +16,7 @@ export function EventRenderer() {
   const [unSavedChanges, setUnSavedChanges] = useState(false);
   const { eventid } = useParams();
   // url query param of /?edit => truthy
-  const edit = useSearchParams.has('edit');
+  const editMode = useSearchParams.has('edit');
 
   // individual modules will pull the mode and data setter fn from context
   // each module
@@ -60,7 +60,7 @@ export function EventRenderer() {
   const eventContextValue = {
     localData,
     setStageData,
-    edit,
+    editMode,
   };
 
   return (

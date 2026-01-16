@@ -2,10 +2,37 @@ import { useContext } from 'react';
 import { EventContext } from '../../components/event/eventRenderer/eventRenderer';
 
 export const useModuleFns = () => {
-  const { mutableData, setStateData, edit } = useContext(EventContext);
+  const { mutableData, setStageData, editMode } = useContext(EventContext);
+
+  const updateObj = (data, pageId, moduleId, fields, setterFn) => {
+    const newData = {
+      ...data,
+      pages: data.pages.map((page) =>
+        page.id !== pageId
+          ? page
+          : {
+              ...page,
+              modules: page.modules.map((module) =>
+                module.id !== moduleId
+                  ? module
+                  : {
+                      ...module,
+                      data: {
+                        ...fields,
+                      },
+                    }
+              ),
+            }
+      ),
+    };
+
+    setterFn(newData);
+  };
+
   return {
     mutableData,
-    setStateData,
-    edit,
+    setStageData,
+    editMode,
+    updateObj,
   };
 };

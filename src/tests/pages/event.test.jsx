@@ -5,7 +5,6 @@ import { dummyData } from '../dummyResponse';
 import { Event } from '../../pages/event/event';
 
 describe('Event renderer works', () => {
-
   beforeEach(() => {
     render(<Event data={dummyData} />);
   });
