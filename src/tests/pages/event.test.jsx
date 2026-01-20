@@ -1,12 +1,24 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { dummyData } from '../dummyResponse';
 import { Event } from '../../pages/event/event';
+import { EventContext } from '../../utils/hooks/useEventContext';
 
 describe('Event renderer works', () => {
   beforeEach(() => {
-    render(<Event data={dummyData} />);
+    render(
+      <EventContext.Provider
+        value={{
+          localData: dummyData,
+          setStageData: vi.fn(),
+          editMode: false,
+          cycleEdit: vi.fn(),
+        }}
+      >
+        <Event data={dummyData} />
+      </EventContext.Provider>
+    );
   });
 
   it('renders page nav buttons', () => {
@@ -24,3 +36,4 @@ describe('Event renderer works', () => {
     expect(screen.getByRole('heading').textContent).toMatch(/Address/);
   });
 });
+

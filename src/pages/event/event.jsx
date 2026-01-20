@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { ModuleRenderer } from '../../components/module/moduleRenderer/moduleRenderer';
 import { ModuleContext } from '../../utils/hooks/useModuleContext';
 

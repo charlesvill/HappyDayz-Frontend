@@ -1,11 +1,10 @@
 import { useFetchData } from '../../../utils/hooks/useFetchData';
 import { serverHostName } from '../../../utils/apiUtils';
-import { useContext, useState, useEffect, createContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Authorization } from '../../../utils/auth/authProvider';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Event } from '../../../pages/event/event';
-
-export const EventContext = createContext();
+import { EventContext } from '../../../utils/hooks/useEventContext';
 
 export function EventRenderer() {
   // event/userid/eventid
@@ -17,12 +16,21 @@ export function EventRenderer() {
   const { eventid } = useParams();
   // url query param of /?edit => truthy
   const editMode = useSearchParams.has('edit');
+  const navigate = useNavigate();
 
   // individual modules will pull the mode and data setter fn from context
   // each module
   const url = serverHostName() + `/event/${user.id}/${eventid}`;
   console.log('url is: ', url);
   const { loading, data } = useFetchData(url, eventid);
+
+  function cycleEdit() {
+    if (!editMode) {
+      navigate(`/event/${eventid}?edit=true`);
+    } else {
+      navigate(`/event/${eventid}`);
+    }
+  }
 
   useEffect(() => {
     // init effect
@@ -61,6 +69,7 @@ export function EventRenderer() {
     localData,
     setStageData,
     editMode,
+    cycleEdit,
   };
 
   return (

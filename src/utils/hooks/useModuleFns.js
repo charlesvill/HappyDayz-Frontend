@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { EventContext } from '../../components/event/eventRenderer/eventRenderer';
+import { useEventContext } from './useEventContext';
 
 export const useModuleFns = () => {
-  const { mutableData, setStageData, editMode } = useContext(EventContext);
+  const { setStageData, cycleEdit } = useEventContext();
 
   const updateObj = (data, pageId, moduleId, fields, setterFn) => {
     const newData = {
@@ -30,9 +29,8 @@ export const useModuleFns = () => {
   };
 
   return {
-    mutableData,
     setStageData,
-    editMode,
     updateObj,
+    cycleEdit,
   };
 };

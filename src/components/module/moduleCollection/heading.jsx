@@ -1,10 +1,12 @@
 import { useModuleContext } from '../../../utils/hooks/useModuleContext';
+import { useEventContext } from '../../../utils/hooks/useEventContext';
 import { useModuleFns } from '../../../utils/hooks/useModuleFns';
 import { useState } from 'react';
 
 export default function Heading({ size, text }) {
+  const { localData, editMode } = useEventContext();
   const { pageId, moduleId } = useModuleContext();
-  const { localData, setStageData, editMode, updateObj } = useModuleFns();
+  const { setStageData, cycleEdit, updateObj } = useModuleFns();
 
   const [fields, setFields] = useState({ size, text });
 
@@ -19,7 +21,7 @@ export default function Heading({ size, text }) {
 
   if (!editMode) {
     const Tag = `h${size}`;
-    return <Tag>{text}</Tag>;
+    return <Tag onClick={cycleEdit}>{text}</Tag>;
   }
 
   return (
