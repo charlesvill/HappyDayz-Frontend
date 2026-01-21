@@ -3,8 +3,8 @@ import { useEventContext } from './useEventContext';
 export const useModuleFns = () => {
   const { setStageData, cycleEdit } = useEventContext();
 
-  const updateObj = (data, pageId, moduleId, fields, setterFn) => {
-    const newData = {
+  const updateObj = (data, pageId, moduleId, fields) => {
+    return {
       ...data,
       pages: data.pages.map((page) =>
         page.id !== pageId
@@ -24,8 +24,6 @@ export const useModuleFns = () => {
             }
       ),
     };
-
-    setterFn(newData);
   };
 
   return {
