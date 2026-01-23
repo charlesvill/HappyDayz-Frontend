@@ -16,7 +16,8 @@ export default function Heading({ size, text }) {
   }
 
   function commit() {
-    updateObj(localData, pageId, moduleId, fields, setStageData);
+    const newData = updateObj(localData, pageId, moduleId, fields);
+    setStageData(newData);
   }
 
   if (!editMode) {
