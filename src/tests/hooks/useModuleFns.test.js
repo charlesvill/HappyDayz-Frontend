@@ -37,4 +37,4 @@ describe('Module Functions', () => {
     // pass to fn
     // read that new fields are present
   });
-});import { useEventContext, useEventContext } from '../../utils/hooks/useEventContext';
+});
