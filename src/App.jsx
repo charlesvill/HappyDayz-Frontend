@@ -66,6 +66,7 @@ function App() {
       children: [
         {
           path: ':eventid',
+          // in production needs to be event renderer
           element: <Event />,
         },
       ],
