@@ -39,6 +39,39 @@ export async function apiFetch(
   return await response.json();
 }
 
+export async function apiMultPartFetch(
+  url,
+  token = null,
+  body = null,
+  method = 'GET',
+  headers = {}
+) {
+  const isFormData = body instanceof FormData;
+
+  const options = {
+    method,
+    headers: {
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+      ...headers,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    mode: 'cors',
+  };
+
+  if (body && method.toUpperCase() !== 'GET') {
+    options.body = isFormData ? body : JSON.stringify(body);
+  }
+
+  const response = await fetch(url, options);
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`${response.status}: ${text}`);
+  }
+
+  return await response.json();
+}
+
 export function clientHostName() {
   if (import.meta.env.MODE === 'development') {
     return window.location.hostname + ':' + window.location.port;
