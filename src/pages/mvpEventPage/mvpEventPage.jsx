@@ -38,7 +38,9 @@ function PhotoAlbum({ photos }) {
   );
 }
 async function submitPhoto(e) {
-  const url = serverHostName() + '/photo';
+  // '/upload/:eventid/:pageid/photo';
+  // '/upload/1/1/photo'
+  const url = serverHostName() + '/upload/1/1/photo';
   const formData = new FormData(e.target);
 
   const response = apiMultPartFetch(url, null, formData, 'POST', {
@@ -63,11 +65,12 @@ function Footer() {
   return <footer>Created by: Charles Villalpando</footer>;
 }
 
-export default function MvpEventPage() {
+export function MvpEventPage() {
   return (
     <>
       <Header />
       <main>{/* <PhotoAlbum />*/}</main>
+      <PhotoForm />
 
       <Footer />
     </>
