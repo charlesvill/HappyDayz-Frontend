@@ -38,25 +38,29 @@ function PhotoAlbum({ photos }) {
   );
 }
 async function submitPhoto(e) {
-  // '/upload/:eventid/:pageid/photo';
-  // '/upload/1/1/photo'
-  const url = serverHostName() + '/upload/1/1/photo';
+  // '/upload/photo/:eventid/:pageid';
+  e.preventDefault();
+  const url = serverHostName() + '/upload/photo/1/1';
   const formData = new FormData(e.target);
 
-  const response = apiMultPartFetch(url, null, formData, 'POST', {
-    'Content-Type': 'multipart/form-data',
-  });
+  let response;
+
+  try {
+    response = await apiMultPartFetch(url, null, formData, 'POST');
+  } catch (err) {
+    console.error(err);
+  } finally {
+    console.log(response);
+  }
 }
 
 function PhotoForm() {
   return (
-    <form>
+    <form onSubmit={submitPhoto}>
       <div>Upload a photo</div>
       <label htmlFor="file">Attach photo</label>
       <input type="file" name="file" id="file" />
-      <button type="submit" onClick={submitPhoto}>
-        Upload
-      </button>
+      <button type="submit">Upload</button>
     </form>
   );
 }

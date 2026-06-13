@@ -51,7 +51,7 @@ export async function apiMultPartFetch(
   const options = {
     method,
     headers: {
-      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+      // ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...headers,
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
