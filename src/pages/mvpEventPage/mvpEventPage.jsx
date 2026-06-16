@@ -37,8 +37,23 @@ function PhotoAlbum({ photos }) {
     </section>
   );
 }
+async function handleFileChanges(e) {
+  e.preventDefault();
+  const fieldName = e.target.id;
+  const files = e.target.files;
+  console.log(e.target);
+  let acc = 0;
+  for (const file of files) {
+    console.log(file.name, file.size, file.type);
+    acc += Number(file.size);
+  }
+  // set a state if the file size has exceeded a boundary
+  console.log('Total size: ', acc);
+}
+
 async function submitPhoto(e) {
   // '/upload/photo/:eventid/:pageid';
+  // check to make sure that the file limit has not been exceeded in order to submit
   e.preventDefault();
   const url = serverHostName() + '/upload/photo/1/1';
   const formData = new FormData(e.target);
@@ -59,7 +74,15 @@ function PhotoForm() {
     <form onSubmit={submitPhoto}>
       <div>Upload a photo</div>
       <label htmlFor="file">Attach photo</label>
-      <input type="file" name="files[]" id="file" accept="image/*" multiple />
+      <input
+        type="file"
+        name="files[]"
+        id="file"
+        accept="image/*, .heic, .heif"
+        onChange={handleFileChanges}
+        multiple
+      />
+      <br />
       <button type="submit">Upload</button>
     </form>
   );
