@@ -59,7 +59,7 @@ function PhotoForm() {
     <form onSubmit={submitPhoto}>
       <div>Upload a photo</div>
       <label htmlFor="file">Attach photo</label>
-      <input type="file" name="file" id="file" />
+      <input type="file" name="files[]" id="file" accept="image/*" multiple />
       <button type="submit">Upload</button>
     </form>
   );
