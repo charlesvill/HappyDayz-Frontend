@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { IndexLayout } from './components/home/indexLayout/indexLayout';
+// import { IndexLayout } from './components/home/indexLayout/indexLayout';
 import { NotFound } from './components/notFound/notFound';
 import { ErrorBoundary } from './components/errorBoundary/errorBoundary';
-import { Dashboard } from './pages/dashboard/dashboard';
-import { HomePage } from './pages/home/homePage';
-import { LogIn } from './pages/log-in/logIn';
-import { SignUp } from './pages/sign-up/signUp';
-import { EventForm } from './pages/createEvent/eventForm';
+// import { Dashboard } from './pages/dashboard/dashboard';
+// import { HomePage } from './pages/home/homePage';
+// import { LogIn } from './pages/log-in/logIn';
+// import { SignUp } from './pages/sign-up/signUp';
+// import { EventForm } from './pages/createEvent/eventForm';
 import { EventLayout } from './components/event/eventLayout/eventLayout';
 import { Event } from './pages/event/event';
 import { AuthProvider } from './utils/auth/authProvider';
@@ -17,68 +17,69 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <IndexLayout />,
-      children: [
-        {
-          // check user and url if / redirect to dash
-          // if home && user -> home
-          index: true,
-          element: <HomePage />,
-        },
-        {
-          path: 'home',
-          element: <HomePage />,
-        },
-        {
-          path: 'log-in',
-          element: <LogIn />,
-        },
-        {
-          path: 'sign-up',
-          element: <SignUp />,
-        },
-        {
-          path: 'create',
-          element: (
-            <AuthGate>
-              <EventForm />
-            </AuthGate>
-          ),
-        },
-        {
-          path: 'dashboard/:userid',
-          element: (
-            <AuthGate>
-              <Dashboard />
-            </AuthGate>
-          ),
-        },
-      ],
-      errorElement: <ErrorBoundary />,
-    },
-    {
-      path: '/event',
-      element: (
-        // authgate needs to be updated for event pages, prompt for guest credentials
-        <AuthGate>
-          <EventLayout />
-        </AuthGate>
-      ),
-      children: [
-        {
-          path: ':eventid',
-          // in production needs to be event renderer
-          element: <Event />,
-        },
-      ],
-      errorElement: <ErrorBoundary />,
-    },
-    {
-      path: '/photo',
-      // testing mvp photo upload
+      // element: <IndexLayout />,
+      // children: [
+      //   {
+      //     // check user and url if / redirect to dash
+      //     // if home && user -> home
+      //     index: true,
+      //     element: <HomePage />,
+      //   },
+      //   {
+      //     path: 'home',
+      //     element: <HomePage />,
+      //   },
+      //   {
+      //     path: 'log-in',
+      //     element: <LogIn />,
+      //   },
+      //   {
+      //     path: 'sign-up',
+      //     element: <SignUp />,
+      //   },
+      //   {
+      //     path: 'create',
+      //     element: (
+      //       <AuthGate>
+      //         <EventForm />
+      //       </AuthGate>
+      //     ),
+      //   },
+      //   {
+      //     path: 'dashboard/:userid',
+      //     element: (
+      //       <AuthGate>
+      //         <Dashboard />
+      //       </AuthGate>
+      //     ),
+      //   },
+      // ],
       element: <MvpEventPage />,
       errorElement: <ErrorBoundary />,
     },
+    // {
+    //   path: '/event',
+    //   element: (
+    //     // authgate needs to be updated for event pages, prompt for guest credentials
+    //     <AuthGate>
+    //       <EventLayout />
+    //     </AuthGate>
+    //   ),
+    //   children: [
+    //     {
+    //       path: ':eventid',
+    //       // in production needs to be event renderer
+    //       element: <Event />,
+    //     },
+    //   ],
+    //   errorElement: <ErrorBoundary />,
+    // },
+    // {
+    //   path: '/photo',
+    //   // testing mvp photo upload
+    //   element: <MvpEventPage />,
+    //   errorElement: <ErrorBoundary />,
+    // },
     {
       path: '*',
       element: <NotFound />,
