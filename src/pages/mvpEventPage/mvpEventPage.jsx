@@ -82,8 +82,8 @@ function PhotoForm({ onClose, onSuccess }) {
       // Validate file sizes
       for (const file of filesArray) {
         totalSize += file.size;
-        if (file.size > 20 * 1024 * 1024) {
-          setError(`File "${file.name}" exceeds 20MB limit`);
+        if (totalSize > 20 * 1024 * 1024) {
+          setError('Files must not exceed 20MB');
           return;
         }
       }
@@ -145,7 +145,7 @@ function PhotoForm({ onClose, onSuccess }) {
       onClose();
     } catch (err) {
       console.error('Upload error:', err);
-      setError('Failed to upload photo. Please try again.');
+      setError('Failed to upload photo. Please try again.', err);
     } finally {
       setIsLoading(false);
     }
@@ -175,7 +175,7 @@ function PhotoForm({ onClose, onSuccess }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="caption">Photo Caption *</label>
+            <label htmlFor="caption">Photo Caption (Optional)</label>
             <textarea
               id="caption"
               name="caption"
@@ -186,7 +186,7 @@ function PhotoForm({ onClose, onSuccess }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="file">Select Photos *</label>
+            <label htmlFor="file">Select Photo(s) *</label>
             <div className={styles.fileInputWrapper}>
               <input
                 type="file"
