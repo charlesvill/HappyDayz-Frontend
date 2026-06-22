@@ -82,8 +82,8 @@ function PhotoForm({ onClose, onSuccess }) {
       // Validate file sizes
       for (const file of filesArray) {
         totalSize += file.size;
-        if (totalSize > 20 * 1024 * 1024) {
-          setError('Files must not exceed 20MB');
+        if (totalSize > 50 * 1024 * 1024) {
+          setError('Files must not exceed 50MB');
           return;
         }
       }
