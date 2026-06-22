@@ -198,7 +198,7 @@ function PhotoForm({ onClose, onSuccess }) {
                 className={styles.fileInput}
               />
               <label htmlFor="file" className={styles.fileInputLabel}>
-                <div>Click to select or drag and drop</div>
+                <div>Click to select or drag and drop up to 5 photos</div>
                 <div className={styles.fileName}>
                   {selectedFiles.length > 0
                     ? `${selectedFiles.length} photo${selectedFiles.length > 1 ? 's' : ''} selected`
