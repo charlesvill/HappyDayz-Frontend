@@ -145,7 +145,7 @@ function PhotoForm({ onClose, onSuccess }) {
       onClose();
     } catch (err) {
       console.error('Upload error:', err);
-      setError('Failed to upload photo. Please try again.', err);
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -231,9 +231,7 @@ function PhotoForm({ onClose, onSuccess }) {
             <button
               type="submit"
               className={styles.submitButton}
-              disabled={
-                isLoading || !formData.name || selectedFiles.length === 0
-              }
+              disabled={isLoading}
             >
               {isLoading ? 'Uploading...' : 'Upload'}
             </button>
