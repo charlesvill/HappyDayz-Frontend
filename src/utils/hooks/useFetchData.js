@@ -12,6 +12,8 @@ export function useFetchData(url, dependentVar) {
       setError(false);
       try {
         const response = await apiFetch(url);
+        console.log(response);
+        console.log('above is the response');
         setData(response);
       } catch (err) {
         setError(err);

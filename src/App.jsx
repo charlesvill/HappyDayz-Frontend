@@ -11,6 +11,7 @@ import { EventLayout } from './components/event/eventLayout/eventLayout';
 import { Event } from './pages/event/event';
 import { AuthProvider } from './utils/auth/authProvider';
 import { AuthGate } from './utils/auth/authPath';
+import { MvpEventPage } from './pages/mvpEventPage/mvpEventPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -66,9 +67,16 @@ function App() {
       children: [
         {
           path: ':eventid',
+          // in production needs to be event renderer
           element: <Event />,
         },
       ],
+      errorElement: <ErrorBoundary />,
+    },
+    {
+      path: '/photo',
+      // testing mvp photo upload
+      element: <MvpEventPage />,
       errorElement: <ErrorBoundary />,
     },
     {
