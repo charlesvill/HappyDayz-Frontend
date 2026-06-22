@@ -122,7 +122,7 @@ function PhotoForm({ onClose, onSuccess }) {
       uploadFormData.append('name', formData.name);
       uploadFormData.append('caption', formData.caption);
 
-      const tempHostName = 'http://52.203.22.110';
+      const tempHostName = 'https://api-happydayz.top';
       const url = tempHostName + '/upload/photo/1/1';
 
       const response = await apiMultPartFetch(
