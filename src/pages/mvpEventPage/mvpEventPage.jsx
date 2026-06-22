@@ -256,7 +256,7 @@ export function MvpEventPage() {
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
 
-  const tempHostName = 'http://52.203.22.110';
+  const tempHostName = 'https://api-happydayz.top';
   const url = tempHostName + '/upload/photo/1/1';
 
   useEffect(() => {
