@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiMultPartFetch, serverHostName } from '../../utils/apiUtils';
+import { apiMultPartFetch, apiFetch } from '../../utils/apiUtils';
 import styles from './mvpEventPage.module.css';
 
 function Header() {
@@ -17,7 +17,8 @@ function PhotoAlbum({ photos }) {
   function Photo({ photo }) {
     return (
       <div className={styles.photoCard}>
-        <img src={photo?.img?.url} alt="Album Photo Entry" />
+        <img src={photo?.url} alt="Album Photo Entry" id={photo?.id} />
+        <a>{photo?.data?.caption}</a>
       </div>
     );
   }
@@ -62,7 +63,7 @@ function PhotoForm({ onClose, onSuccess }) {
     name: '',
     caption: '',
   });
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -73,16 +74,21 @@ function PhotoForm({ onClose, onSuccess }) {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    console.log('files', e.target.files);
-    if (file) {
-      // Basic validation
-      if (file.size > 20 * 1024 * 1024) {
-        // 20MB limit
-        setError('File size exceeds 20MB limit');
-        return;
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const filesArray = Array.from(files);
+      let totalSize = 0;
+
+      // Validate file sizes
+      for (const file of filesArray) {
+        totalSize += file.size;
+        if (file.size > 20 * 1024 * 1024) {
+          setError(`File "${file.name}" exceeds 20MB limit`);
+          return;
+        }
       }
-      setSelectedFile(file);
+
+      setSelectedFiles(filesArray);
       setError('');
     }
   };
@@ -92,12 +98,8 @@ function PhotoForm({ onClose, onSuccess }) {
       setError('Name is required');
       return false;
     }
-//    if (!formData.caption.trim()) {
-//      setError('Caption is required');
-//      return false;
-//    }
-    if (!selectedFile) {
-      setError('Please select a photo');
+    if (selectedFiles.length === 0) {
+      setError('Please select at least one photo');
       return false;
     }
     return true;
@@ -111,19 +113,29 @@ function PhotoForm({ onClose, onSuccess }) {
     setIsLoading(true);
     try {
       const uploadFormData = new FormData();
-      uploadFormData.append('files[]', selectedFile);
+
+      // Append all selected files
+      for (const file of selectedFiles) {
+        uploadFormData.append('files[]', file);
+      }
+
       uploadFormData.append('name', formData.name);
       uploadFormData.append('caption', formData.caption);
 
       const tempHostName = 'http://52.203.22.110';
       const url = tempHostName + '/upload/photo/1/1';
 
-      const response = await apiMultPartFetch(url, null, uploadFormData, 'POST');
+      const response = await apiMultPartFetch(
+        url,
+        null,
+        uploadFormData,
+        'POST'
+      );
       console.log('Upload response:', response);
 
       // Reset form
       setFormData({ name: '', caption: '' });
-      setSelectedFile(null);
+      setSelectedFiles([]);
       setError('');
 
       // Notify parent component of success
@@ -148,7 +160,7 @@ function PhotoForm({ onClose, onSuccess }) {
         </button>
       </div>
       <div className={styles.modalBody}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className={styles.formGroup}>
             <label htmlFor="name">Your Name *</label>
             <input
@@ -174,27 +186,35 @@ function PhotoForm({ onClose, onSuccess }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="file">Select Photo *</label>
+            <label htmlFor="file">Select Photos *</label>
             <div className={styles.fileInputWrapper}>
               <input
                 type="file"
                 id="file"
-                name="file"
+                name="files[]"
                 accept="image/*,.heic,.heif"
                 onChange={handleFileChange}
+                multiple
                 className={styles.fileInput}
               />
               <label htmlFor="file" className={styles.fileInputLabel}>
                 <div>Click to select or drag and drop</div>
                 <div className={styles.fileName}>
-                  {selectedFile ? selectedFile.name : 'JPG, PNG, HEIC up to 10MB'}
+                  {selectedFiles.length > 0
+                    ? `${selectedFiles.length} photo${selectedFiles.length > 1 ? 's' : ''} selected`
+                    : 'JPG, PNG, HEIC up to 20MB total'}
                 </div>
               </label>
             </div>
           </div>
 
           {error && (
-            <div style={{ color: 'var(--color-text)', marginBottom: 'var(--spacing-md)' }}>
+            <div
+              style={{
+                color: 'var(--color-text)',
+                marginBottom: 'var(--spacing-md)',
+              }}
+            >
               {error}
             </div>
           )}
@@ -211,7 +231,9 @@ function PhotoForm({ onClose, onSuccess }) {
             <button
               type="submit"
               className={styles.submitButton}
-              disabled={isLoading || !formData.name || !formData.caption || !selectedFile}
+              disabled={
+                isLoading || !formData.name || selectedFiles.length === 0
+              }
             >
               {isLoading ? 'Uploading...' : 'Upload'}
             </button>
@@ -223,36 +245,41 @@ function PhotoForm({ onClose, onSuccess }) {
 }
 
 function Footer() {
-  return <footer className={styles.footer}>Created by: Charles Villalpando</footer>;
+  return (
+    <footer className={styles.footer}>Created by: Charles Villalpando</footer>
+  );
 }
 
 export function MvpEventPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [photos, setPhotos] = useState([
-    // Placeholder photos - will be replaced with API data
-    // {
-    //   id: 1,
-    //   img: { url: 'https://via.placeholder.com/300' },
-    //   text: 'Sample photo',
-    // },
-  ]);
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(false);
+
+  const tempHostName = 'http://52.203.22.110';
+  const url = tempHostName + '/upload/photo/1/1';
 
   useEffect(() => {
-    // TODO: Fetch photos from API when ready
-    // const fetchPhotos = async () => {
-    //   try {
-    //     const url = serverHostName() + '/photos/event/1/page/1';
-    //     const response = await apiFetch(url);
-    //     setPhotos(response.data);
-    //   } catch (err) {
-    //     console.error('Failed to fetch photos:', err);
-    //   }
-    // };
-    // fetchPhotos();
-  }, []);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await apiFetch(url);
+        console.log(response, ' response');
+        setPhotos(response);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+        setReload(false);
+      }
+    };
+
+    fetchData();
+  }, [url, reload]);
 
   const handleUploadSuccess = () => {
     // TODO: Refetch photos after successful upload
+    setReload(true);
     console.log('Photo uploaded successfully');
   };
 
@@ -275,7 +302,10 @@ export function MvpEventPage() {
 
       {/* Upload Modal */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <PhotoForm onClose={() => setIsModalOpen(false)} onSuccess={handleUploadSuccess} />
+        <PhotoForm
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={handleUploadSuccess}
+        />
       </Modal>
 
       <Footer />
